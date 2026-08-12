@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Trading Analysis Platform</title>
+  <meta name="description" content="Professional AI-powered trading analysis with 16+ indicators, 7 strategies, and real-time signals">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%8A%3C/text%3E%3C/svg%3E">
+
+  <!-- Lightweight Charts from CDN -->
+  <script src="https://unpkg.com/lightweight-charts@5.2.0/dist/lightweight-charts.standalone.production.js"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="dark">
+
+  <!-- App Shell -->
+  <div id="app" class="app-layout">
+
+    <!-- ── Sidebar ── -->
+    <nav id="sidebar" class="sidebar" role="navigation" aria-label="Main navigation">
+      <div class="sidebar-logo" aria-label="Trading Platform Logo">
+        <!-- Candlestick chart icon -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="8" y1="10" x2="8" y2="14"></line>
+          <line x1="8" y1="18" x2="8" y2="22"></line>
+          <rect x="6" y="6" width="4" height="8" rx="0.5"></rect>
+          <line x1="16" y1="4" x2="16" y2="9"></line>
+          <line x1="16" y1="13" x2="16" y2="20"></line>
+          <rect x="14" y="9" width="4" height="4" rx="0.5"></rect>
+          <line x1="12" y1="1" x2="12" y2="23" stroke-opacity="0.2"></line>
+        </svg>
+      </div>
+
+      <ul class="sidebar-nav">
+        <!-- Dashboard -->
+        <li data-page="dashboard" class="nav-item active" title="Dashboard" role="button" tabindex="0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+          </svg>
+          <span class="nav-tooltip">Dashboard</span>
+        </li>
+
+        <!-- Chart -->
+        <li data-page="chart" class="nav-item" title="Chart" role="button" tabindex="0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="2 20 8 14 12 18 18 10 22 14"></polyline>
+            <line x1="2" y1="20" x2="22" y2="20" stroke-opacity="0.3"></line>
+          </svg>
+          <span class="nav-tooltip">Chart</span>
+        </li>
+
+        <!-- Scanner -->
+        <li data-page="scanner" class="nav-item" title="Scanner" role="button" tabindex="0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+          </svg>
+          <span class="nav-tooltip">Scanner</span>
+        </li>
+
+        <!-- Signals -->
+        <li data-page="signals" class="nav-item" title="Signals" role="button" tabindex="0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+          <span class="nav-tooltip">Signals</span>
+        </li>
+
+        <!-- Backtest -->
+        <li data-page="backtest" class="nav-item" title="Backtest" role="button" tabindex="0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+          </svg>
+          <span class="nav-tooltip">Backtest</span>
+        </li>
+
+        <!-- Settings -->
+        <li data-page="settings" class="nav-item" title="Settings" role="button" tabindex="0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span class="nav-tooltip">Settings</span>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Mobile sidebar backdrop -->
+    <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+    <!-- ── Header ── -->
+    <header id="header" class="header" role="banner">
+      <div class="header-left">
+        <!-- Hamburger menu (mobile sidebar toggle) -->
+        <button id="sidebar-toggle" class="btn-icon" aria-label="Toggle sidebar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <div class="symbol-search">
+          <select id="symbol-select" aria-label="Select trading symbol">
+            <!-- Options populated by JS -->
+          </select>
+        </div>
+      </div>
+
+      <div class="header-center">
+        <div id="timeframe-selector" class="timeframe-btns" role="tablist" aria-label="Timeframe selector">
+          <!-- Buttons populated by JS -->
+        </div>
+      </div>
+
+      <div class="header-right">
+        <!-- Connection status indicator -->
+        <div id="connection-status" class="status-dot disconnected" data-tooltip="Disconnected"></div>
+
+        <!-- Current price display -->
+        <span id="current-price" class="price-display">--</span>
+
+        <!-- Analyze button -->
+        <button id="analyze-btn" class="btn btn-primary">
+          <!-- Search/magnifier icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          Analyze
+        </button>
+      </div>
+    </header>
+
+    <!-- ── Main Content ── -->
+    <main id="main-content" class="main-content" role="main">
+
+      <!-- Dashboard Page -->
+      <div id="page-dashboard" class="page active">
+        <!-- Rendered by js/ui/app.js -->
+      </div>
+
+      <!-- Chart Page -->
+      <div id="page-chart" class="page">
+        <!-- Rendered by js/ui/app.js -->
+      </div>
+
+      <!-- Scanner Page -->
+      <div id="page-scanner" class="page">
+        <!-- Rendered by js/ui/app.js -->
+      </div>
+
+      <!-- Signals Page -->
+      <div id="page-signals" class="page">
+        <!-- Rendered by js/ui/app.js -->
+      </div>
+
+      <!-- Backtest Page -->
+      <div id="page-backtest" class="page">
+        <!-- Rendered by js/ui/app.js -->
+      </div>
+
+      <!-- Settings Page -->
+      <div id="page-settings" class="page">
+        <!-- Rendered by js/ui/app.js -->
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ── Modal Overlay ── -->
+  <div id="modal-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <div id="modal-content" class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-title" class="modal-title"></h3>
+        <button id="modal-close" class="btn-icon" aria-label="Close modal">
+          <!-- Close (X) icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div id="modal-body" class="modal-body"></div>
+      <div id="modal-footer" class="modal-footer"></div>
+    </div>
+  </div>
+
+  <!-- ── Toast Container ── -->
+  <div id="toast-container" class="toast-container" role="status" aria-live="polite"></div>
+
+  <!-- ── Scripts (dependency order) ── -->
+
+  <!-- Configuration -->
+  <script src="js/config.js"></script>
+
+  <!-- Storage layer -->
+  <script src="js/storage/index.js"></script>
+
+  <!-- Market data -->
+  <script src="js/market/binance.js"></script>
+
+  <!-- Technical indicators -->
+  <script src="js/indicators/index.js"></script>
+  <script src="js/indicators/market-structure.js"></script>
+  <script src="js/indicators/patterns.js"></script>
+
+  <!-- Strategies -->
+  <script src="js/strategies/index.js"></script>
+
+  <!-- Signal engine -->
+  <script src="js/signals/engine.js"></script>
+
+  <!-- Risk management -->
+  <script src="js/risk/index.js"></script>
+
+  <!-- AI analysis -->
+  <script src="js/ai/index.js"></script>
+
+  <!-- Backtesting -->
+  <script src="js/backtest/index.js"></script>
+
+  <!-- UI application -->
+  <script src="js/ui/app.js"></script>
+
+</body>
+</html>
